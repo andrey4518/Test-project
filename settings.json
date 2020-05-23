@@ -1,0 +1,6 @@
+{
+    "data_size" : 10000,
+    "buffer_size" : 80000,
+    "prepared_filename" : "build/data.in",
+    "processed_filename" : "build/out.dat"
+}

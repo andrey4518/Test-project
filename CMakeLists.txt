@@ -1,10 +1,25 @@
-cmake_minimum_required(VERSION 3.0.0)
+cmake_minimum_required(VERSION 3.13.0)
 project(Test-project VERSION 0.1.0)
 
 include(CTest)
 enable_testing()
 
 add_executable(Test-project main.cpp)
+
+target_sources(Test-project PUBLIC AppSettings.cpp)
+target_sources(Test-project PUBLIC SignalGenerator.cpp)
+
+set (BOOST_ROOT "/usr/lib/x86_64-linux-gnu")
+
+find_package(Boost COMPONENTS system program_options REQUIRED)
+
+if(Boost_FOUND)
+  message(STATUS "Boost version: ${Boost_VERSION}")
+  target_include_directories(Test-project PUBLIC ${Boost_INCLUDE_DIRS})
+  target_link_libraries(Test-project LINK_PUBLIC ${Boost_LIBRARIES})
+else()
+  message(STATUS "Boost NOT Found !")
+endif(Boost_FOUND)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
