@@ -4,12 +4,13 @@ project(Test-project VERSION 0.1.0)
 include(CTest)
 enable_testing()
 
-add_executable(Test-project main.cpp)
+SET (SRCS main.cpp
+          AppSettings.cpp
+          SignalGenerator.cpp
+          SignalFilter.cpp
+          KalmanFilter/Kalman.cpp)
 
-target_sources(Test-project PUBLIC AppSettings.cpp)
-target_sources(Test-project PUBLIC SignalGenerator.cpp)
-target_sources(Test-project PUBLIC SignalFilter.cpp)
-target_sources(Test-project PUBLIC KalmanFilter/Kalman.cpp)
+add_executable(Test-project ${SRCS})
 
 set (BOOST_ROOT "/usr/lib/x86_64-linux-gnu")
 

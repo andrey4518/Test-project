@@ -13,6 +13,7 @@ using namespace std;
 
 int main(int argc, char** argv) {
 
+    //parsing options
     po::options_description desc("General options");
     string settingsFilename;
     desc.add_options()
@@ -22,18 +23,16 @@ int main(int argc, char** argv) {
     po::variables_map vm;
     po::store(po::parse_command_line(argc, argv, desc), vm);
     po::notify(vm);
-    if(vm.count("help")) {
+    if(vm.count("help") || !vm.size()) {
         cout << desc << "\n";
         return 1;
     }
-    if(!vm.size())
-    {
-        settingsFilename = "/media/win/VSCode_projects/CPP/Test-project/Test-project/settings.json";
-    }
 
+    //loading settings from file
     AppSettings settings;
     settings.load(settingsFilename);
 
+    //generate starting data
     SignalGenerator generator(&settings);
 
     cout<<"generates start"<<endl;
@@ -48,6 +47,7 @@ int main(int argc, char** argv) {
     cout<<"generates done"<<endl;
     cout<<"generation time "<<chrono::duration_cast<chrono::milliseconds>(endTime - startTime).count()<<"\n";
     
+    //filter generated data
     SignalFilter filter(&settings);
 
     cout<<"filter start"<<endl;
