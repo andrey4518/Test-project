@@ -4,18 +4,22 @@
 
 class AppSettings;
 
-/*
-    class used for generating noised sequence
-    working according settings in passed AppSettings object
-*/
+/**
+ * @brief class used for generating noised sequence
+ * working according settings in passed AppSettings object
+ */
 
 class SignalGenerator
 {
 public:
     SignalGenerator(AppSettings * settings = nullptr);
-    //generates bin file
+    /**
+     * @brief generates bin file
+     */
     void generate_to_file_binary();
-    //generates csv file
+    /**
+     * @brief generates csv file
+     */
     void generate_to_file_csv();
 
     void setSettings(AppSettings *settings);

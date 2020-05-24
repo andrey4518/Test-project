@@ -4,17 +4,22 @@
 
 class AppSettings;
 
-/*
-    class for applying Kalman filter to input sequnce
-*/
+/**
+ * @brief class for applying Kalman filter to input sequnce
+ * working according settings in passed AppSettings object
+ */
 
 class SignalFilter
 {
 public:
     SignalFilter(AppSettings *settings = nullptr);
-    //filter binary sequence
+    /**
+     * @brief filter binary sequence
+     */
     void filter_from_file_binary();
-    //filter csv sequence
+    /**
+     * @brief filter csv sequence
+     */
     void filter_from_file_csv();
 
     void setSettings(AppSettings *settings);
