@@ -1,6 +1,10 @@
 {
-    "data_size" : 10000,
+    "data_size" : 100000,
     "buffer_size" : 80000,
-    "prepared_filename" : "build/data.in",
-    "processed_filename" : "build/out.dat"
+    "generation_step" : 0.1,
+    "prepared_filename" : "build/in.dat",
+    "processed_filename" : "build/out.dat",
+    "min_noise" : -0.5,
+    "max_noise" : 0.5,
+    "mode" : "bin"
 }

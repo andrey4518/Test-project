@@ -8,6 +8,8 @@ add_executable(Test-project main.cpp)
 
 target_sources(Test-project PUBLIC AppSettings.cpp)
 target_sources(Test-project PUBLIC SignalGenerator.cpp)
+target_sources(Test-project PUBLIC SignalFilter.cpp)
+target_sources(Test-project PUBLIC KalmanFilter/Kalman.cpp)
 
 set (BOOST_ROOT "/usr/lib/x86_64-linux-gnu")
 
@@ -20,6 +22,8 @@ if(Boost_FOUND)
 else()
   message(STATUS "Boost NOT Found !")
 endif(Boost_FOUND)
+
+target_include_directories(Test-project PUBLIC "KalmanFilter")
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})

@@ -1,13 +1,20 @@
-#ifndef SIGNLAGENERATOR
-#define SIGNLAGENERATOR
+#ifndef SIGNALGENERATOR
+#define SIGNALGENERATOR
 #include <string>
+
+class AppSettings;
 
 class SignalGenerator
 {
 public:
-    SignalGenerator();
-    void generate_to_file(const std::string& filename, 
-    unsigned long size, unsigned long long buffSize);
+    SignalGenerator(AppSettings * settings = nullptr);
+    void generate_to_file_binary();
+    void generate_to_file_csv();
+
+    void setSettings(AppSettings *settings);
+    AppSettings * getSettings() const;
+private:
+    AppSettings * _settings;
 };
 
-#endif //SIGNLAGENERATOR
+#endif //SIGNALGENERATOR

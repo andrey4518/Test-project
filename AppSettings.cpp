@@ -5,7 +5,9 @@
 
 namespace pt = boost::property_tree;
 
-AppSettings::AppSettings() : size(0), buffer_size(0) {}
+AppSettings::AppSettings() : size(0), buffer_size(0), min_noise(0), 
+    max_noise(1), generation_step(0.1)
+{}
 
 void AppSettings::load(const std::string &filename)
 {
@@ -16,6 +18,10 @@ void AppSettings::load(const std::string &filename)
     buffer_size = tree.get<unsigned long>("buffer_size");
     prepared_filename = tree.get<std::string>("prepared_filename");
     processed_filename = tree.get<std::string>("processed_filename");
+    min_noise = tree.get<double>("min_noise");
+    max_noise = tree.get<double>("max_noise");
+    generation_step = tree.get<double>("generation_step");
+    mode = tree.get<std::string>("mode");
 }
 
 void AppSettings::save()
@@ -31,4 +37,9 @@ void AppSettings::save(const std::string &filename)
     tree.put("buffer_size",buffer_size);
     tree.put("prepared_filename",prepared_filename);
     tree.put("processed_filename",processed_filename);
+    tree.put("min_noise",prepared_filename);
+    tree.put("max_noise",processed_filename);
+    tree.put("max_noise",generation_step);
+    tree.put("mode",mode);
+    pt::write_json(m_file,tree);
 }

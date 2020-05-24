@@ -2,9 +2,10 @@
 #include <string>
 #include <time.h>
 #include <chrono>
+#include <boost/program_options.hpp>
 #include "AppSettings.h"
 #include "SignalGenerator.h"
-#include <boost/program_options.hpp>
+#include "SignalFilter.h"
 
 namespace po = boost::program_options;
 
@@ -32,18 +33,34 @@ int main(int argc, char** argv) {
 
     AppSettings settings;
     settings.load(settingsFilename);
-    cout<<settings.size<<"  "<<settings.buffer_size<<endl;
 
-    srand(time(nullptr));
-
-    SignalGenerator generator;
+    SignalGenerator generator(&settings);
 
     cout<<"generates start"<<endl;
     auto startTime = chrono::high_resolution_clock::now();
-    generator.generate_to_file(settings.prepared_filename,settings.size,settings.buffer_size);
+    if(settings.mode == "bin")
+        generator.generate_to_file_binary();
+    else if(settings.mode == "csv")
+        generator.generate_to_file_csv();
+    else
+        cout<<"unknown mode"<<endl;
     auto endTime = chrono::high_resolution_clock::now();
-    cout<<"time "<<chrono::duration_cast<chrono::milliseconds>(endTime - startTime).count()<<"\n";
-    cout<<"generates done\n";
+    cout<<"generates done"<<endl;
+    cout<<"generation time "<<chrono::duration_cast<chrono::milliseconds>(endTime - startTime).count()<<"\n";
+    
+    SignalFilter filter(&settings);
 
+    cout<<"filter start"<<endl;
+    startTime = chrono::high_resolution_clock::now();
+    if(settings.mode == "bin")
+        filter.filter_from_file_binary();
+    else if(settings.mode == "csv")
+        filter.filter_from_file_csv();
+    else
+        cout<<"unknown mode"<<endl;
+    endTime = chrono::high_resolution_clock::now();
+    cout<<"filter done"<<endl;
+    cout<<"filter time "<<chrono::duration_cast<chrono::milliseconds>(endTime - startTime).count()<<"\n";
+    
     return 0;
 }
