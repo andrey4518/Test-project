@@ -8,6 +8,7 @@ SET (SRCS main.cpp
           AppSettings.cpp
           SignalGenerator.cpp
           SignalFilter.cpp
+          Utilities.cpp
           KalmanFilter/Kalman.cpp)
 
 add_executable(Test-project ${SRCS})

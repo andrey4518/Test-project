@@ -6,6 +6,7 @@
 #include <random>
 #include <chrono>
 #include "AppSettings.h"
+#include "Utilities.h"
 
 using namespace std;
 
@@ -41,7 +42,7 @@ void SignalGenerator::generate_to_file_csv()
     ofstream file(_settings->prepared_filename, ofstream::out | ofstream::trunc);
     if(!file.good())
     {
-        cout<<"reading: error ocured\n";
+        cout<<"reading: error ocured"<<endl;
         cout<<"error "<<file.rdstate();
     }
 
@@ -54,10 +55,14 @@ void SignalGenerator::generate_to_file_csv()
     uniform_real_distribution<double> noise(_settings->min_noise, _settings->max_noise);
 
     double t;
+    string ts;
     for(long double x = 0; x < _settings->size; x += _settings->generation_step)
     {
         t = sin(x) + noise(generator);
-        file<<t<<"\n";
+        ts = to_string(t);
+        utils::replace(ts, ".", ",");
+        ts = "\"" + ts + "\"";
+        file<<ts<<"\n";
     }
     file.flush();
 }

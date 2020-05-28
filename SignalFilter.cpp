@@ -4,6 +4,7 @@
 #include <vector>
 #include "AppSettings.h"
 #include "Kalman.h"
+#include "Utilities.h"
 
 using namespace std;
 
@@ -67,15 +68,22 @@ void SignalFilter::filter_from_file_csv()
     kalmanX.setAngle(0);
 
     string s;
-    double t;
+    double t = 0;
     while(!ifile.eof())
     {
         getline(ifile,s);
-
+        
         if(!s.empty())
         {
-            t = kalmanX.getAngle(stod(s),_settings->generation_step,_settings->generation_step);
-            ofile<<t<<"\n";
+            s = s.substr(1,s.length() - 2);
+            utils::replace(s,",",".");
+            t = stod(s);
+            t = kalmanX.getAngle(t,_settings->generation_step,_settings->generation_step);
+            s = to_string(t);
+            utils::replace(s, ".", ",");
+            s = "\"" + s + "\"";
+
+            ofile<<s<<"\n";
         }
     }
     ofile.flush();
